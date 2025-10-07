@@ -97,7 +97,8 @@ fun ServerDialog(
                             modifier = Modifier.padding(start = 16.dp, bottom = 4.dp)
                         )
                     }
-                } OutlinedTextField(
+                }
+                OutlinedTextField(
                     value = username,
                     onValueChange = { username = it },
                     label = { Text("Username (optional)") },
