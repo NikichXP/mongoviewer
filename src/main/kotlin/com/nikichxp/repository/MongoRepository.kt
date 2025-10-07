@@ -5,12 +5,24 @@ import com.mongodb.client.MongoCollection
 import com.nikichxp.model.ServerConnection
 import com.nikichxp.model.TabData
 import com.nikichxp.model.ViewMode
+import com.nikichxp.service.ConnectionPersistence
 import com.nikichxp.state.AppState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.bson.Document
 
 class MongoRepository {
+    private var connections: List<ServerConnection> = ConnectionPersistence.loadConnections()
+
+    fun getConnections(): List<ServerConnection> = connections
+
+    suspend fun saveConnection(connection: ServerConnection) {
+        connections = ConnectionPersistence.saveConnection(connection, connections)
+    }
+
+    suspend fun deleteConnection(connectionId: String) {
+        connections = ConnectionPersistence.deleteConnection(connectionId, connections)
+    }
 
     suspend fun loadCollections(appState: AppState, server: ServerConnection) {
         try {
@@ -23,10 +35,12 @@ class MongoRepository {
                     withContext(Dispatchers.Main) {
                         val serverIndex = appState.servers.indexOfFirst { it.id == server.id }
                         if (serverIndex != -1) {
-                            appState.servers[serverIndex] = server.copy(
+                            val updatedServer = server.copy(
                                 collections = collections,
                                 isExpanded = true
                             )
+                            appState.servers[serverIndex] = updatedServer
+                            saveConnection(updatedServer)
                         }
                     }
                 }

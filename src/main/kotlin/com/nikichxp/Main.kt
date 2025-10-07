@@ -1,12 +1,31 @@
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.*
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Snackbar
+import androidx.compose.material.Tab
+import androidx.compose.material.Text
+import androidx.compose.material.TextButton
+import androidx.compose.material.darkColors
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -15,15 +34,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
-import com.nikichxp.model.*
-import com.nikichxp.state.AppState
-import com.nikichxp.state.SplitPane
+import com.nikichxp.model.ServerConnection
+import com.nikichxp.model.TabData
+import com.nikichxp.model.ViewMode
 import com.nikichxp.repository.MongoRepository
+import com.nikichxp.state.AppState
 import com.nikichxp.ui.LeftPanel
 import com.nikichxp.ui.RightPanel
 import com.nikichxp.ui.ServerDialog
 import kotlinx.coroutines.launch
-import org.bson.Document
 
 private val mongoRepository = MongoRepository()
 
